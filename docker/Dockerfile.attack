@@ -1,3 +1,8 @@
 FROM kalilinux/kali-rolling
 
-RUN apt update && apt install -y metasploit-framework
+RUN apt update && apt install -y metasploit-framework curl 
+
+COPY ../scripts/exploits/attack.sh /usr/bin/attack.sh
+RUN chmod +x /usr/bin/attack.sh
+
+CMD ["attack.sh"]
