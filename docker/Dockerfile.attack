@@ -1,8 +1,13 @@
-FROM kalilinux/kali-rolling
+FROM alpine:latest
 
-RUN apt update && apt install -y metasploit-framework curl 
+ENV SCRIPT_PATH=/attack.sh
+ENV WORDLIST_PATH=/password.txt
 
-COPY ../scripts/exploits/attack.sh /usr/bin/attack.sh
-RUN chmod +x /usr/bin/attack.sh
+RUN apk add --no-cache curl bash
 
-CMD ["attack.sh"]
+COPY attack.sh ${SCRIPT_PATH}
+COPY password.txt ${WORDLIST_PATH}
+
+RUN chmod +x ${SCRIPT_PATH}
+
+CMD ["/attack.sh"]
